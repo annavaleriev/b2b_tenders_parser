@@ -1,6 +1,7 @@
 import argparse
-from tender_parser import fetch_all_cards
-from storage import save_to_csv, save_to_excel
+
+from storage import save_tenders_to_csv, save_tenders_to_excel
+from tender_parser import fetch_tenders
 
 
 def main():
@@ -9,7 +10,7 @@ def main():
     )
     parser.add_argument(
         "--max",
-        type=int,
+        type=lambda x: int(x) if int(x) > 0 else parser.error(" --max должно быть больше 0"),
         required=True,
         help="Сколько тендеров собрать"
     )
@@ -22,12 +23,13 @@ def main():
 
     args = parser.parse_args()
 
-    tenders = fetch_all_cards(max_cards=args.max)
+    tenders = fetch_tenders(max_tenders=args.max)
     if not tenders:
+        print("Нет данных для сохранения.")
         return
 
-    save_to_csv(tenders, filename=args.output)
-    save_to_excel(tenders, filename=args.output.replace(".csv", ".xlsx"))
+    save_tenders_to_csv(tenders, filename=args.output)
+    save_tenders_to_excel(tenders, filename=args.output.replace(".csv", ".xlsx"))
 
 
 if __name__ == "__main__":
