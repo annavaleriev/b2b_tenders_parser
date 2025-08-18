@@ -4,7 +4,7 @@ import pandas as pd
 from pathlib import Path
 
 
-def clean_description(text: str) -> str:
+def clean_tender_description(text: str) -> str:
     """Удаляет строки с лишней информацией из описания"""
     excluded = r"Заводской номер|Год выпуска|Покупатель"
     return " ".join(
@@ -14,7 +14,7 @@ def clean_description(text: str) -> str:
     )
 
 
-def save_to_csv(tenders: list[dict], filename: str = "tenders.csv") -> None:
+def save_tenders_to_csv(tenders: list[dict], filename: str = "tenders.csv") -> None:
     """Сохраняет список тендеров в CSV"""
     if not tenders:
         return
@@ -25,7 +25,7 @@ def save_to_csv(tenders: list[dict], filename: str = "tenders.csv") -> None:
         writer.writerows(tenders)
 
 
-def save_to_excel(tenders: list[dict], filename: str = "tenders.xlsx") -> None:
+def save_tenders_to_excel(tenders: list[dict], filename: str = "tenders.xlsx") -> None:
     """Сохраняет список тендеров в Excel"""
     if not tenders:
         return
